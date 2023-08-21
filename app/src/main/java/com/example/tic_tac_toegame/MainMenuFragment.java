@@ -7,9 +7,7 @@ import android.widget.Button;
 
 public class MainMenuFragment extends Fragment {
 
-    public MainMenuFragment() {
-        // Required empty public constructor
-    }
+    // ... (existing code)
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -21,6 +19,40 @@ public class MainMenuFragment extends Fragment {
         Button exitButton = view.findViewById(R.id.exitButton);
 
         // Set click listeners and handle button actions
+        startButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Replace MainMenuFragment with the desired game fragment
+                Fragment gameFragment; // Define the game fragment to launch
+
+                // Check the user's selection for game mode
+                // You can use a dialog or another UI element to get the user's choice
+                // For now, we'll use TwoPlayerGameFragment as an example
+                gameFragment = new TwoPlayerGameFragment();
+
+                // Replace the current fragment with the selected game fragment
+                requireFragmentManager().beginTransaction()
+                        .replace(R.id.fragmentContainer, gameFragment)
+                        .addToBackStack(null) // Allow back navigation to MainMenuFragment
+                        .commit();
+            }
+        });
+
+        settingsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Replace MainMenuFragment with the SettingsFragment
+                SettingsFragment settingsFragment = new SettingsFragment();
+
+                // Replace the current fragment with the SettingsFragment
+                requireFragmentManager().beginTransaction()
+                        .replace(R.id.fragmentContainer, settingsFragment)
+                        .addToBackStack(null) // Allow back navigation to MainMenuFragment
+                        .commit();
+            }
+        });
+
+        // Handle other button actions
 
         return view;
     }

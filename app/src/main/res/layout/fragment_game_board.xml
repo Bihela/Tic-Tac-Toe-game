@@ -4,10 +4,44 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:columnCount="3"
     android:rowCount="3"
+    android:columnCount="3"
     android:padding="16dp">
 
-    <!-- Add UI elements for the game board (e.g., ImageViews for X and O markers) here -->
+    <Button
+        android:id="@+id/cell_0_0"
+        style="@style/GameCell"/>
+
+    <Button
+        android:id="@+id/cell_0_1"
+        style="@style/GameCell"/>
+
+    <Button
+        android:id="@+id/cell_0_2"
+        style="@style/GameCell"/>
+
+    <Button
+        android:id="@+id/cell_1_0"
+        style="@style/GameCell"/>
+
+    <Button
+        android:id="@+id/cell_1_1"
+        style="@style/GameCell"/>
+
+    <Button
+        android:id="@+id/cell_1_2"
+        style="@style/GameCell"/>
+
+    <Button
+        android:id="@+id/cell_2_0"
+        style="@style/GameCell"/>
+
+    <Button
+        android:id="@+id/cell_2_1"
+        style="@style/GameCell"/>
+
+    <Button
+        android:id="@+id/cell_2_2"
+        style="@style/GameCell"/>
 
 </GridLayout>
