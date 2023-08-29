@@ -7,14 +7,54 @@
     android:orientation="vertical"
     android:padding="16dp">
 
+    <!-- Other UI elements... -->
+
+    <!-- Add the boardSizeSpinner here -->
+    <Spinner
+        android:id="@+id/boardSizeSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="16dp"
+        android:minHeight="48dp" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Settings"
-        android:textSize="20sp"
+        android:text="Win Condition:"
+        android:textSize="16sp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="8dp"/>
+
+    <SeekBar
+        android:id="@+id/winConditionSeekBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginBottom="16dp"/>
 
-    <!-- Add UI elements for customization settings here -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Player Marker:"
+        android:textSize="16sp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="8dp"/>
+
+    <Spinner
+        android:id="@+id/playerMarkerSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginBottom="16dp"
+        android:minHeight="48dp" />
+
+    <Button
+        android:id="@+id/applyButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Apply Settings"
+        android:layout_gravity="center"
+        android:layout_marginTop="16dp" />
 
 </LinearLayout>

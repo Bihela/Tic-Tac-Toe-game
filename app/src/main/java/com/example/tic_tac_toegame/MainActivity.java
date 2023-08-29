@@ -1,5 +1,9 @@
-import androidx.appcompat.app.AppCompatActivity;
+package com.example.tic_tac_toegame;
+
 import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
+
 
 public class MainActivity extends AppCompatActivity {
 

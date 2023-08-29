@@ -5,10 +5,21 @@
     android:layout_height="match_parent"
     tools:context=".AIGameFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <GridLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:rowCount="3"
+        android:columnCount="3"
+        android:padding="16dp">
+
+        <!-- Define the layout for each cell in the game board -->
+        <!-- You can use any view to represent a cell (e.g., Button, ImageView, etc.) -->
+        <Button
+            android:id="@+id/cell_0_0"
+            style="@style/GameCell"/>
+
+        <!-- Define other cells similarly -->
+
+    </GridLayout>
 
 </FrameLayout>

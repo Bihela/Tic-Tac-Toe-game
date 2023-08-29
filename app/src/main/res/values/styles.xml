@@ -1,0 +1,7 @@
+<resources>
+    <style name="GameCell">
+        <!-- Style attributes for the game cell -->
+    </style>
+
+    <!-- Define other styles here if needed -->
+</resources>

@@ -1,3 +1,5 @@
+package com.example.tic_tac_toegame;
+
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
@@ -9,14 +11,14 @@ public class TwoPlayerGameFragment extends Fragment {
 
     private int boardSize;
     private int winCondition;
-    private String playerMarker;
+    private String player1Marker;
+    private String player2Marker;
 
-    private Button[][] cells; // Represent the game cells
-    private boolean isPlayerOneTurn = true; // Player 1 starts the game
-    private boolean gameEnded = false; // Check if the game has ended
+    private Button[][] cells;
+    private boolean player1Turn = true;
+    private boolean gameEnded = false;
 
     public TwoPlayerGameFragment() {
-        // Required empty public constructor
     }
 
     @Override
@@ -24,41 +26,38 @@ public class TwoPlayerGameFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_two_player_game, container, false);
 
-        // Initialize the game cells UI elements
         cells = new Button[boardSize][boardSize];
         for (int i = 0; i < boardSize; i++) {
+            final int rowIndex = i;
             for (int j = 0; j < boardSize; j++) {
+                final int columnIndex = j;
                 int cellId = getResources().getIdentifier("cell_" + i + "_" + j, "id", requireContext().getPackageName());
                 cells[i][j] = view.findViewById(cellId);
                 cells[i][j].setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        onCellClick(i, j);
+                        onCellClick(rowIndex, columnIndex);
                     }
                 });
             }
         }
-
-        // ... (other initialization logic)
 
         return view;
     }
 
     private void onCellClick(int row, int col) {
         if (!gameEnded && cells[row][col].getText().toString().isEmpty()) {
-            // Set the player's marker on the clicked cell
-            cells[row][col].setText(isPlayerOneTurn ? "X" : "O");
-
-            // Check for win or draw after each move
+            if (player1Turn) {
+                cells[row][col].setText(player1Marker);
+            } else {
+                cells[row][col].setText(player2Marker);
+            }
+            player1Turn = !player1Turn;
             checkForWinOrDraw();
-
-            // Toggle player turns
-            isPlayerOneTurn = !isPlayerOneTurn;
         }
     }
 
     private void checkForWinOrDraw() {
-        // Check rows, columns, and diagonals for a win
         for (int i = 0; i < boardSize; i++) {
             if (checkLine(cells[i])) {
                 endGame(cells[i][0].getText().toString() + " wins!");
@@ -86,7 +85,6 @@ public class TwoPlayerGameFragment extends Fragment {
             return;
         }
 
-        // Check for a draw
         boolean isDraw = true;
         for (int i = 0; i < boardSize; i++) {
             for (int j = 0; j < boardSize; j++) {
@@ -113,7 +111,23 @@ public class TwoPlayerGameFragment extends Fragment {
 
     private void endGame(String message) {
         gameEnded = true;
-        // Display the game outcome message, update stats, etc.
     }
 
+    public void applySettings(int boardSize, int winCondition, String playerMarker) {
+        this.boardSize = boardSize;
+        this.winCondition = winCondition;
+        this.player1Marker = playerMarker;
+        this.player2Marker = playerMarker; // Use the same marker for both players
+        resetGameBoard();
+    }
 
+    private void resetGameBoard() {
+        for (int i = 0; i < boardSize; i++) {
+            for (int j = 0; j < boardSize; j++) {
+                cells[i][j].setText("");
+            }
+        }
+        player1Turn = true;
+        gameEnded = false;
+    }
+}

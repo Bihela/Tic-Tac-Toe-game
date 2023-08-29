@@ -1,3 +1,5 @@
+package com.example.tic_tac_toegame;
+
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
@@ -14,9 +16,7 @@ public class SettingsFragment extends Fragment {
     private Spinner playerMarkerSpinner;
     private Button applyButton;
 
-    public SettingsFragment() {
-        // Required empty public constructor
-    }
+    public SettingsFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -39,12 +39,10 @@ public class SettingsFragment extends Fragment {
     }
 
     private void applySettings() {
-        // Get selected settings from UI elements
         int selectedBoardSize = Integer.parseInt(boardSizeSpinner.getSelectedItem().toString());
-        int selectedWinCondition = winConditionSeekBar.getProgress() + 3; // Add 3 to match 3-5 range
+        int selectedWinCondition = winConditionSeekBar.getProgress() + 3;
         String selectedPlayerMarker = playerMarkerSpinner.getSelectedItem().toString();
 
-        // Pass selected settings to the active game fragment
         Fragment activeFragment = getParentFragmentManager().findFragmentById(R.id.fragmentContainer);
         if (activeFragment instanceof TwoPlayerGameFragment) {
             ((TwoPlayerGameFragment) activeFragment).applySettings(selectedBoardSize, selectedWinCondition, selectedPlayerMarker);

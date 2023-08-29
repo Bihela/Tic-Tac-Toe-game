@@ -1,88 +1,78 @@
+package com.example.tic_tac_toegame;
+
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import java.util.Random;
 
 public class AIGameFragment extends Fragment {
 
     private int boardSize;
     private int winCondition;
     private String playerMarker;
+    private String aiPlayerMarker;
 
-    private Button[][] cells; // Represent the game cells
-    private boolean gameEnded = false; // Check if the game has ended
+    private Button[][] cells;
+    private boolean gameEnded = false;
 
     public AIGameFragment() {
-        // Required empty public constructor
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_ai_game, container, false);
+        View view = inflater.inflate(R.layout.fragment_a_i_game, container, false);
 
-        // Initialize the game cells UI elements
         cells = new Button[boardSize][boardSize];
         for (int i = 0; i < boardSize; i++) {
+            final int rowIndex = i;
             for (int j = 0; j < boardSize; j++) {
+                final int columnIndex = j;
                 int cellId = getResources().getIdentifier("cell_" + i + "_" + j, "id", requireContext().getPackageName());
                 cells[i][j] = view.findViewById(cellId);
                 cells[i][j].setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        onCellClick(i, j);
+                        onCellClick(rowIndex, columnIndex);
                     }
                 });
             }
         }
 
-        // ... (other initialization logic)
+        if (playerMarker.equals("X")) {
+            aiPlayerMarker = "O";
+        } else {
+            aiPlayerMarker = "X";
+        }
 
         return view;
     }
 
     private void onCellClick(int row, int col) {
         if (!gameEnded && cells[row][col].getText().toString().isEmpty()) {
-            // Set the human player's marker on the clicked cell
             cells[row][col].setText(playerMarker);
-
-            // Check for win or draw after each move
             checkForWinOrDraw();
-
-            // AI makes its move
             makeAIMove();
-
-            // Check for win or draw after AI move
             checkForWinOrDraw();
         }
     }
 
-
     private void makeAIMove() {
-        // Generate random row and column indices
-        int randomRow = new Random().nextInt(boardSize);
-        int randomCol = new Random().nextInt(boardSize);
+        int randomRow, randomCol;
 
-        // Check if the randomly selected cell is empty
-        if (cells[randomRow][randomCol].getText().toString().isEmpty()) {
-            // Set the AI's marker on the randomly selected cell
-            cells[randomRow][randomCol].setText(playerMarker);
+        do {
+            randomRow = new Random().nextInt(boardSize);
+            randomCol = new Random().nextInt(boardSize);
+        } while (!cells[randomRow][randomCol].getText().toString().isEmpty());
 
-            // Check for win or draw after AI's move
-            checkForWinOrDraw();
-
-            // Toggle player turns
-            isPlayerOneTurn = !isPlayerOneTurn;
-        } else {
-            // If the randomly selected cell is not empty, try again
-            makeAIMove();
-        }
+        cells[randomRow][randomCol].setText(aiPlayerMarker);
+        checkForWinOrDraw();
     }
 
     private void checkForWinOrDraw() {
-        // Check rows, columns, and diagonals for a win
         for (int i = 0; i < boardSize; i++) {
             if (checkLine(cells[i])) {
                 endGame(cells[i][0].getText().toString() + " wins!");
@@ -110,7 +100,6 @@ public class AIGameFragment extends Fragment {
             return;
         }
 
-        // Check for a draw
         boolean isDraw = true;
         for (int i = 0; i < boardSize; i++) {
             for (int j = 0; j < boardSize; j++) {
@@ -137,8 +126,26 @@ public class AIGameFragment extends Fragment {
 
     private void endGame(String message) {
         gameEnded = true;
-        // Display the game outcome message, update stats, etc.
-        // In AI mode, you can include a different message like "You lost!" for the player
     }
 
+    public void applySettings(int boardSize, int winCondition, String playerMarker) {
+        this.boardSize = boardSize;
+        this.winCondition = winCondition;
+        this.playerMarker = playerMarker;
+        if (playerMarker.equals("X")) {
+            aiPlayerMarker = "O";
+        } else {
+            aiPlayerMarker = "X";
+        }
+        resetGameBoard();
+    }
 
+    private void resetGameBoard() {
+        for (int i = 0; i < boardSize; i++) {
+            for (int j = 0; j < boardSize; j++) {
+                cells[i][j].setText("");
+            }
+        }
+        gameEnded = false;
+    }
+}
